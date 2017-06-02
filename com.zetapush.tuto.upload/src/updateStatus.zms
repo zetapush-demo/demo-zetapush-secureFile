@@ -1,0 +1,3 @@
+macroscript updateStatus(string path, string value){
+	var response = apiFile::zpServiceFile.updateMeta({path : path, metadata : {'status':value}});
+} return { response } on channel __selfName

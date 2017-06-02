@@ -1,0 +1,16 @@
+/** Macroscript called to get the anchor Id */
+macroscript getAnchorId(string name){
+	var request = database.get({table : 'anchorIds', key : name});
+	var id = request.result.id;
+	
+} broadcast { id } on channel __selfName
+
+/** Macroscript to add a new couple anchorId / file */
+macroscript addNewAnchorId(string name, string anchorId){
+	database.put({table : 'anchorIds', data : anchorId, key : name, column : 'id'});
+} return { name, anchorId } on channel __selfName
+
+/** Macroscript to delete a couple anchorId / file */
+macroscript removeAnchorId(string name){
+	database.removeRow({table : 'anchorIds', key : name});
+}

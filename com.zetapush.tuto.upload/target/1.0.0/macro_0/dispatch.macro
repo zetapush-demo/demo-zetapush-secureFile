@@ -1,0 +1,1 @@
+{"_type":"macro","description":" Macro dispatch","line":121,"steps":[],"name":"dispatch","channel":"dispatch","result":{"anchor":{"__ref":"${anchor}"}},"source":"com.zetapush.tuto.upload|1.0.0:src/api.zms","params":[{"name":"anchor","constraints":[{"name":"type","config":{"type":"com.zetapush.tuto.upload.anchor"}}]}],"broadcast":true}

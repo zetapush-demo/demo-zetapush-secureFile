@@ -1,0 +1,1 @@
+{"_type":"MacroFunction","description":"Generate a unique id","line":1,"steps":[],"name":"uuid","result":{"__ref":"${str:rnd36(16)}"},"parameters":[],"source":"com.zetapush.core.utils|2.0.0:src/api/utils/uuid.zms"}

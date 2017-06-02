@@ -1,0 +1,1 @@
+{"_type":"MacroFunction","description":"Helper function: Hash a string with a given salt","line":1,"steps":[],"name":"hash","result":{"__ref":"${str:hex(str:md5(obj:sum(salt, value)))}"},"parameters":[{"name":"salt"},{"name":"value"}],"source":"com.zetapush.core.utils|2.0.0:src/api/utils/hash.zms"}

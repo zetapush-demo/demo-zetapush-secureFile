@@ -1,0 +1,22 @@
+<ion-header>
+<ion-navbar>
+    <ion-title>
+    Details
+    </ion-title>
+</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <img id="image" src="{{parameters.picture}}"/>
+
+    <div id="infos">
+        <h2><b>Informations :</b></h2>
+        <p><b>Latitude : </b>{{parameters.latitude}}</p>
+        <p><b>Longitude : </b>{{parameters.longitude}}</p>
+        <p><b>Tags : </b>{{parameters.tags}}</p>
+        <p><b>Date : </b>{{parameters.timestamp | date:'short'}}</p>
+        <p><b>Status : </b>{{parameters.status}}</p>
+        <button ion-button (click)="downloadReceipt()">Download Receipt</button>
+    </div>
+</ion-content>

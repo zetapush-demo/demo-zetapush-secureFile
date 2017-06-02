@@ -1,0 +1,1 @@
+{"_type":"MacroFunction","description":"Map a native api object to user object","line":1,"steps":[],"name":"map_entry_key_value","result":{"key":{"__ref":"${entry.key}"},"value":{"__ref":"${entry.value}"}},"parameters":[{"name":"entry"}],"source":"com.zetapush.core.utils|2.0.0:src/api/utils/map.zms"}

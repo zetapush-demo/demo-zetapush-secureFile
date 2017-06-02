@@ -1,0 +1,121 @@
+/** 
+    List existing public Anchors
+*/
+macroscript listAnchors(
+) {	
+    var HttpClientHeader = [{name: "Authorization", value : WOLEET_AUTHENT_HEADER}];
+    
+    var response = httpClient.request( {headers : HttpClientHeader, method : "GET", parseMode : "OBJECT", url :
+        WOLEET_API_URL + "anchors"});
+        
+} return { content: response.content } on channel __selfName
+
+/**
+    Create a new Anchor
+*/
+macroscript createAnchor(
+    /** anchor Pojo */ @NotNull anchor anchor
+){
+    
+    var HttpClientHeader = [{name: "Authorization", value : WOLEET_AUTHENT_HEADER}, {name:"Accept", value:"application/json"}, {name:"Content-type", value:"application/json"}];
+    
+    // Copy the readonly parameter to new local reference
+    const newAnchor = anchor;
+    newAnchor.callbackURL = CALLBACK_URL;
+    
+    var response = httpClient.request( {headers : HttpClientHeader, content: newAnchor, method : "POST", parseMode : "OBJECT", url :
+        WOLEET_API_URL + "anchor"});
+        
+
+    // Add matching between userKey / anchorId
+    sudo 'GLOBAL' database.put({table : 'userkey', data : __userKey, key : response.content.id, column : 'key'});	
+    
+        
+} return { response } on channel __selfName
+
+/** 
+    update an anchor by its id
+*/
+macroscript updateAnchor(
+    /** Id of the Anchor */ @NotNull string anchorId,
+    /** anchor Pojo */ @NotNull anchor anchor
+){  
+    var HttpClientHeader = [{name: "Authorization", value : WOLEET_AUTHENT_HEADER}, {name:"Accept", value:"application/json"}, {name:"Content-type", value:"application/json"}];
+        
+    var response = httpClient.request( {headers : HttpClientHeader, content: anchor, method : "PUT", parseMode : "OBJECT", url :
+        WOLEET_API_URL + "anchor/" + anchorId});
+        
+} return { response } on channel __selfName
+
+/** 
+    delete an anchor by its id
+*/
+macroscript deleteAnchor(
+    /** Id of the Anchor */ @NotNull string anchorId
+){
+    var HttpClientHeader = [{name: "Authorization", value : WOLEET_AUTHENT_HEADER}];
+        
+    var response = httpClient.request( {headers : HttpClientHeader, method : "DELETE", parseMode : "OBJECT", url :
+        WOLEET_API_URL + "anchor/" + anchorId});
+    
+} return { response } on channel __selfName
+
+/** 
+    get an anchor by its id
+*/
+macroscript getAnchor(
+    /** Id of the Anchor */ @NotNull string anchorId
+){  
+    var HttpClientHeader = [{name: "Authorization", value : WOLEET_AUTHENT_HEADER}];
+        
+    var response = httpClient.request( {headers : HttpClientHeader, method : "GET", parseMode : "OBJECT", url :
+        WOLEET_API_URL + "anchor/" + anchorId});
+    
+} return { content: response.content } on channel __selfName
+
+/** 
+    get a receipt by an anchor id
+*/
+macroscript getReceipt(
+    /** Id of the Anchor */ @NotNull string anchorId
+){  
+    var HttpClientHeader = [{name: "Authorization", value : WOLEET_AUTHENT_HEADER}];
+        
+    var response = httpClient.request( {headers : HttpClientHeader, method : "GET", parseMode : "OBJECT", url :
+        WOLEET_API_URL + "receipt/" + anchorId});
+    
+} return { content: response.content } on channel __selfName
+
+/** 
+    update an anchor by its id
+*/
+macroscript verifyReceipt(
+    /** anchor Pojo */ @NotNull receipt receipt
+){
+      
+    var HttpClientHeader = [{name: "Authorization", value : WOLEET_AUTHENT_HEADER}, {name:"Accept", value:"application/json"}, {name:"Content-type", value:"application/json"}];
+        
+    var response = httpClient.request( {headers : HttpClientHeader, content: receipt, method : "POST", parseMode : "OBJECT", url :
+        WOLEET_API_URL + "receipt/verify"});
+        
+} return { response } on channel __selfName
+
+
+/** called by Woleet when a receipt is ready */
+@RequestMapping("callbackreceipt")
+macroscript callbackReceipt(
+    @RequestBody anchor anchor
+){
+        
+    // Get destinataire
+    var request = sudo 'GLOBAL' database.get({table : 'userkey', key : anchor.id});
+        var destinataire = request.result.key;
+ 
+        sudo destinataire call updateStatus({path : anchor.name, value : anchor.status});
+        
+        sudo destinataire await dispatch({ anchor }) loud;
+            
+    } return { anchor } on channel __selfName
+
+
+macroscript dispatch(anchor anchor) {} broadcast { anchor } on channel __selfName

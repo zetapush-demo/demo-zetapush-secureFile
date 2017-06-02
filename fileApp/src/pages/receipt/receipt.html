@@ -1,0 +1,23 @@
+<ion-header>
+<ion-navbar>
+    <ion-title>
+    Receipt
+    </ion-title>
+</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <div id="infos">
+
+        <p><b>Version chainpoint : </b>{{parameters.version}}</p>
+        <p><b>Hash type : </b>{{parameters.hashType}}</p>
+        <p><b>Merkle_root : </b>{{parameters.merkle}}</p>
+        <p><b>Tx_id : </b>{{parameters.txId}}</p>
+        <p><b>Date : </b>{{parameters.timestamp | date:'short'}}</p>
+        <p><b>Target hash : </b>{{parameters.targetHash}}</p>
+        <p><b>Target_proof : </b>{{parameters.targetProof}}</p>
+        <p><b>Hanchor id : </b>{{parameters.hanchorId}}</p>
+    </div>
+
+</ion-content>

@@ -1,0 +1,17 @@
+// create a test user, to be able to run/debug macros from the eclipse UI
+auth.memauth_createUser({
+    login:'user',
+    password:'password',
+    email:'user@zetapush.com'
+});
+
+database.gda_createTable({
+    'name': 'userkey',
+    'columns': [{ 'name': 'key', 'type': GdaDataType_STRING}]
+});
+
+// Key : name of data 
+database.gda_createTable({
+    'name': 'anchorIds',
+    'columns': [{ 'name': 'id', 'type': GdaDataType_STRING}]
+});

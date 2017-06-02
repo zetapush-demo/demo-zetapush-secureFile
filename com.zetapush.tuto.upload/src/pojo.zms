@@ -1,0 +1,51 @@
+class anchor{
+  string id ;
+  number created ;
+  number lastModified ;
+  string name;
+  string hash;
+  string signedHash;
+  string pubKey;
+  string signature;
+  string identityURL;
+  boolean public_;
+  string[] tags;
+  map metadata;
+  string callbackURL;
+  string status;
+  number timestamp;
+  number confirmations;
+  string txId;
+}
+
+class header{
+	string chainpoint_version;
+    string hash_type;
+    string merkle_root;
+    string tx_id;
+    number timestamp;
+}
+class target{
+	string target_hash;
+    target_proof target_proof;
+}
+
+class target_proof{
+	string left;
+    string parent;
+    string right;
+}
+
+class signature{
+    string signedHash;
+    string pubKey;
+    string signature;
+    string identityURL;
+ }
+  
+class receipt{
+	header header;
+	target target;
+	signature signature;
+	map extra;
+}

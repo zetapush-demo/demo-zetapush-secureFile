@@ -1,0 +1,20 @@
+recipe com.zetapush.tuto.upload 1.0.0;
+
+import recipe com.zetapush.core.file 2.0.0 in apiFile;
+
+const WOLEET_API_URL = '<API_URL>';
+const WOLEET_AUTHENT_HEADER = '<authen_header>';
+
+const CALLBACK_URL = "http://<node>/str/rest/deployed/<sandboxId>/macro_0/macro/exec/callbackreceipt";
+
+/** a simple authentication service */
+service auth = simple(__default);
+
+/** our code is run by this service */
+service code = macro(__default) for 'src';
+
+/** httpClient service */
+service httpClient = httpclient(__default).forbiddenVerbs(__all);
+
+service database = gda(__default);
+
